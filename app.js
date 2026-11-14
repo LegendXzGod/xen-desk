@@ -308,10 +308,10 @@
       const locked = a === "risk" && openPos > 0;
       const decs = d?.decisions || [];
       return `<section class="agent-full" id="ag-${a}">
-        <div class="af-head"><span class="sdot" style="background:${running ? "var(--green)" : "var(--ter)"}"></span>
+        <div class="af-head"><span class="sdot" style="background:${running ? "var(--green)" : st && st.status === "paused" ? "var(--orange)" : "var(--ter)"}"></span>
           <span class="nm" style="color:${COLORS[a]}">${NAMES[a]}</span>
           <span class="swtap" aria-label="pause or resume"><span class="switch ${running ? "on" : ""} disabled"></span></span></div>
-        <div class="af-meta">${running ? "running" : (st ? "down" : "paused")} · ${d ? d.today : 0} today${locked ? " · locked while a position is open" : ""} · pause/resume in Telegram</div>
+        <div class="af-meta">${st ? st.status : "down"} · ${d ? d.today : 0} today${locked ? " · locked while a position is open" : ""} · pause/resume in Telegram</div>
         <div class="dec">${decs.length ? decs.map(x => `<div class="r"><span class="sec">${hhmm(x.ts)}</span>
             <a href="${esc(x.coin_url)}" target="_blank" rel="noopener"><span>${esc(x.name)}</span>${x.reason ? `<span class="rs">${esc(x.reason)}</span>` : ""}</a>
             <span class="v-${["pass", "kill", "red", "reject", "stop"].includes(x.verdict) ? x.verdict : "other"}">${esc(x.verdict)}</span></div>`).join("")
